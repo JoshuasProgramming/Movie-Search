@@ -39,9 +39,14 @@ const App = () => {
   //2. Turn the fetched data from the url and title into json
   //3. Insert the data into the 'movies' string array
   const searchMovies = async (title) => {
+
+    //url of movie
     const response = await fetch(`${API_URL}&s=${title}`);
+
+    //javaScript Object with movie data
     const data = await response.json();
 
+    //'data' is an object, and we need to look at the 'Search' attribute area
     setMovies(data.Search);
   };
 
@@ -71,18 +76,22 @@ const App = () => {
       </div>
 
        {/* Whenever the movie the user searched for exists...
-           we'll map over all the movies and insert them into a movie card
+           we'll map over all the movies and insert them into a movie card via props
         */}
       {movies?.length > 0 ? (
+
         <div className="container">
+
+          {/* loop/map through the 'movies' and insert a movie into the 'MovieCard' component as a prop */}
+          {/* Whenever the movie the user searched for doesn't exist...
+          we'll just say that the movie doesn't exist
+          */}
           {movies.map((movie) => (
             <MovieCard movie={movie} />
           ))}
+
         </div>
       ) :
-      {/* Whenever the movie the user searched for doesn't exist...
-           we'll just say that the movie doesn't exist
-        */}
        (
         <div className="empty">
           <h2>No movies found</h2>
