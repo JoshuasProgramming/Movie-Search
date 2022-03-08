@@ -34,6 +34,10 @@ const App = () => {
 
   //click event 
   //We're waiting for the user of the site to trigger an event 
+  //When the user presses the 'searchIcon' we'll...
+  //1. Fetch the api url and title, which the user entered
+  //2. Turn the fetched data from the url and title into json
+  //3. Insert the data into the 'movies' string array
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
@@ -43,8 +47,16 @@ const App = () => {
 
   return (
     <div className="app">
+
+      {/* header of web application */}
       <h1>MovieSearch</h1>
 
+      {/* search div has two parts
+      1. A input area which allows the user to type in a movie (value) and updates the searchTerms every time the value
+         changes
+      2. A search icon which, when clicked triggers the 'searchMovies' function.It then inserts the 'searchTerm'
+         data with movies.
+       */}
       <div className="search">
         <input
           value={searchTerm}
@@ -58,13 +70,20 @@ const App = () => {
         />
       </div>
 
+       {/* Whenever the movie the user searched for exists...
+           we'll map over all the movies and insert them into a movie card
+        */}
       {movies?.length > 0 ? (
         <div className="container">
           {movies.map((movie) => (
             <MovieCard movie={movie} />
           ))}
         </div>
-      ) : (
+      ) :
+      {/* Whenever the movie the user searched for doesn't exist...
+           we'll just say that the movie doesn't exist
+        */}
+       (
         <div className="empty">
           <h2>No movies found</h2>
         </div>
